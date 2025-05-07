@@ -1,44 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>LINE LIFF</title>
-  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
-</head>
-<body>
-  <h3>🔒 กำลังโหลดข้อมูลจาก LINE...</h3>
-  <div id="profile" style="display:none;">
-    <img id="pictureUrl" width="120" style="border-radius: 50%;"/><br>
-    <p><strong>Display Name:</strong> <span id="displayName"></span></p>
-    <p><strong>User ID:</strong> <span id="userId"></span></p>
-    <p><strong>Status Message:</strong> <span id="statusMessage"></span></p>
-  </div>
+<script>
+  async function runLiff() {
+    try {
+      console.log("เริ่ม init LIFF...");
+      await liff.init({ liffId: "2007376732-8p2zWOxo" });  // << ใส่ตรง ๆ
+      console.log("LIFF init สำเร็จ");
 
-  <!-- ✅ โค้ดนี้คือส่วนที่ต้องเพิ่ม (แทน <script> เดิม) -->
-  <script>
-    async function runLiff() {
-      try {
-        await liff.init({ liffId: "{{LIFF_ID}}" });
-        console.log("✅ LIFF init success");
-
-        if (!liff.isLoggedIn()) {
-          console.log("🔁 Not logged in → redirecting to LINE login");
-          liff.login();
-        } else {
-          const profile = await liff.getProfile();
-          console.log("✅ Got profile:", profile);
-          document.getElementById("displayName").textContent = profile.displayName;
-          document.getElementById("userId").textContent = profile.userId;
-          document.getElementById("statusMessage").textContent = profile.statusMessage || "-";
-          document.getElementById("pictureUrl").src = profile.pictureUrl;
-          document.getElementById("profile").style.display = "block";
-        }
-      } catch (err) {
-        console.error("❌ LIFF error:", err);
+      if (!liff.isLoggedIn()) {
+        console.log("ยังไม่ login");
+        liff.login();
+      } else {
+        const profile = await liff.getProfile();
+        console.log("profile ได้แล้ว", profile);
+        document.getElementById("displayName").textContent = profile.displayName;
+        document.getElementById("userId").textContent = profile.userId;
+        document.getElementById("statusMessage").textContent = profile.statusMessage || "-";
+        document.getElementById("pictureUrl").src = profile.pictureUrl;
+        document.getElementById("profile").style.display = "block";
       }
+    } catch (e) {
+      console.error("LIFF error:", e);
     }
+  }
 
-    window.onload = runLiff;
-  </script>
-</body>
-</html>
+  window.onload = runLiff;
+</script>
