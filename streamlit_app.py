@@ -4,8 +4,7 @@ st.set_page_config(page_title="LINE LIFF Profile", layout="centered")
 
 st.title("👤 ข้อมูลผู้ใช้จาก LINE LIFF")
 
-# ✅ ใช้ API ใหม่ของ Streamlit แทน experimental
-params = st.query_params
+params = st.query_params  # ✅ อัปเดตแล้ว
 
 user_id = params.get("userId")
 display_name = params.get("name")
