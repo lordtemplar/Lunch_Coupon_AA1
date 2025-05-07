@@ -1,0 +1,16 @@
+<script>
+  async function runLiff() {
+    await liff.init({ liffId: "{{LIFF_ID}}" });
+    if (!liff.isLoggedIn()) {
+      liff.login();
+    } else {
+      const profile = await liff.getProfile();
+      document.getElementById("displayName").textContent = profile.displayName;
+      document.getElementById("userId").textContent = profile.userId;
+      document.getElementById("statusMessage").textContent = profile.statusMessage || "-";
+      document.getElementById("pictureUrl").src = profile.pictureUrl;
+      document.getElementById("profile").style.display = "block";
+    }
+  }
+  window.onload = runLiff;
+</script>
