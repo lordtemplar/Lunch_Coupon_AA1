@@ -16,6 +16,9 @@
         } else {
           const profile = await liff.getProfile();
           const userId = profile.userId;
+          const name = encodeURIComponent(profile.displayName);
+          const pic = encodeURIComponent(profile.pictureUrl);
+          const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${userId}&name=${name}&pic=${pic}`;
 
           // ✅ เปลี่ยน redirect ไปยัง Streamlit App จริง
           const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${encodeURIComponent(userId)}`;
