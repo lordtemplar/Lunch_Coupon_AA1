@@ -20,7 +20,7 @@ if user_id:
     st.markdown(f"🔍 ค่า action ที่ได้รับ: `{action}`")
 
     # เปลี่ยนเนื้อหาตาม action
-    if action == "use":
+    if action == "redeem":
         st.header("🍽 ใช้คูปอง")
         st.write("โปรดแสดงหน้าจอนี้ให้ร้านค้าสแกน QR หรือยืนยันสิทธิ์")
     elif action == "check":
