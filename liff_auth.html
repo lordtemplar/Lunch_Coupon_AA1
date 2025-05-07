@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>LINE LIFF Login Redirect</title>
+  <title>LINE LIFF Auth Redirect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
@@ -19,12 +19,10 @@
   <script>
     async function main() {
       try {
-        // ✅ ดึง action จาก query string เช่น ?action=use
         const urlParams = new URLSearchParams(window.location.search);
         const action = urlParams.get("action") || "none";
 
-        // ✅ ใส่ LIFF ID ของคุณที่นี่
-        await liff.init({ liffId: "2007376732-8p2zWOxo" });
+        await liff.init({ liffId: "2007376732-8p2zWOxo" }); // 🔁 LIFF ID ของคุณ
 
         if (!liff.isLoggedIn()) {
           liff.login();
@@ -33,18 +31,14 @@
           const userId = encodeURIComponent(profile.userId);
           const name = encodeURIComponent(profile.displayName);
           const pic = encodeURIComponent(profile.pictureUrl);
-
-          // ✅ URL ของ Streamlit App (แทนที่ให้ตรงของคุณ)
           const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${userId}&name=${name}&pic=${pic}&action=${action}`;
-
           window.location.href = redirectUrl;
         }
       } catch (err) {
-        console.error("LIFF Error:", err);
-        document.body.innerHTML = "<p>❌ เกิดข้อผิดพลาดในการโหลด LIFF กรุณาลองใหม่</p>";
+        console.error("LIFF error:", err);
+        document.body.innerHTML = "<p>❌ เกิดข้อผิดพลาดในการโหลด LIFF</p>";
       }
     }
-
     main();
   </script>
 </body>
