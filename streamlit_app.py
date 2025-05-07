@@ -1,22 +1,32 @@
 import streamlit as st
 
-st.set_page_config(page_title="LINE LIFF Profile", layout="centered")
+st.set_page_config(page_title="LINE Coupon System", layout="centered")
 
-st.title("👤 ข้อมูลผู้ใช้จาก LINE LIFF")
-
-params = st.query_params  # ✅ อัปเดตแล้ว
-
+params = st.query_params
 user_id = params.get("userId")
 display_name = params.get("name")
 picture_url = params.get("pic")
+action = params.get("action", "none")  # ได้ค่ามาจาก Rich Menu
+
+st.title("🎫 ระบบคูปองอาหาร")
 
 if user_id:
-    st.success("✅ คุณเข้าสู่ระบบด้วย LINE แล้ว")
-    st.markdown(f"🆔 **LINE User ID:** `{user_id}`")
-
-    if display_name:
-        st.markdown(f"👤 **Display Name:** `{display_name}`")
+    st.success(f"✅ ยินดีต้อนรับ {display_name} (LINE ID: {user_id})")
     if picture_url:
-        st.image(picture_url, width=150)
+        st.image(picture_url, width=100)
+
+    st.markdown(f"🧭 **คุณกดเข้ามาจากปุ่ม:** `{action}`")
+
+    if action == "use":
+        st.header("🍽 ใช้คูปอง")
+        # ... แสดง QR หรือระบบให้ร้านค้าตรวจสอบ
+    elif action == "check":
+        st.header("📊 ตรวจสอบคูปองของคุณ")
+        # ... แสดงยอดคงเหลือหรือประวัติ
+    elif action == "register":
+        st.header("📝 ลงทะเบียนผู้ใช้ใหม่")
+        # ... แบบฟอร์มสมัครสมาชิก / ผูก LINE ID
+    else:
+        st.info("ℹ️ ไม่ทราบประเภทการใช้งาน")
 else:
-    st.warning("⚠️ ไม่พบข้อมูลผู้ใช้ กรุณาเข้าสู่ระบบผ่าน LINE LIFF ก่อน")
+    st.warning("⚠️ กรุณาเข้าสู่ระบบผ่าน LINE LIFF ก่อน")
