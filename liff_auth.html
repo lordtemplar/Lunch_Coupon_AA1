@@ -10,7 +10,7 @@
   <script>
     async function main() {
       try {
-        await liff.init({ liffId: "2007376732-8p2zWOxo" }); // << ใช้ LIFF ID ของคุณ
+        await liff.init({ liffId: "2007376732-8p2zWOxo" }); // ✅ ใส่ LIFF ID จริงตรงนี้
         if (!liff.isLoggedIn()) {
           liff.login();
         } else {
@@ -18,10 +18,9 @@
           const userId = profile.userId;
           const name = encodeURIComponent(profile.displayName);
           const pic = encodeURIComponent(profile.pictureUrl);
-          const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${userId}&name=${name}&pic=${pic}`;
 
-          // ✅ เปลี่ยน redirect ไปยัง Streamlit App จริง
-          const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${encodeURIComponent(userId)}`;
+          // ✅ URL ของ Streamlit App ที่ต้องการให้ redirect ไปหลัง login
+          const redirectUrl = `https://lunchcouponaa1-pcixbmkqtr3pbk7zzh5wpz.streamlit.app/?userId=${userId}&name=${name}&pic=${pic}`;
           window.location.href = redirectUrl;
         }
       } catch (err) {
