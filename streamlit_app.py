@@ -4,7 +4,7 @@ st.set_page_config(page_title="LINE LIFF Profile", layout="centered")
 
 st.title("👤 ข้อมูลผู้ใช้จาก LINE LIFF")
 
-# ✅ ใช้ API ปัจจุบัน
+# ✅ ใช้ API ปัจจุบันของ Streamlit
 params = st.query_params
 
 user_id = params.get("userId")
@@ -16,7 +16,7 @@ if user_id:
     st.markdown(f"🆔 **LINE User ID:** `{user_id}`")
 
     if display_name:
-        st.markdown(f"👤 **Display Name:** {display_name}")
+        st.markdown(f"👤 **Display Name:** `{display_name}`")
     if picture_url:
         st.image(picture_url, width=150)
 else:
