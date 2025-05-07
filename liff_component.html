@@ -1,16 +1,44 @@
-<script>
-  async function runLiff() {
-    await liff.init({ liffId: "{{LIFF_ID}}" });
-    if (!liff.isLoggedIn()) {
-      liff.login();
-    } else {
-      const profile = await liff.getProfile();
-      document.getElementById("displayName").textContent = profile.displayName;
-      document.getElementById("userId").textContent = profile.userId;
-      document.getElementById("statusMessage").textContent = profile.statusMessage || "-";
-      document.getElementById("pictureUrl").src = profile.pictureUrl;
-      document.getElementById("profile").style.display = "block";
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>LINE LIFF</title>
+  <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+</head>
+<body>
+  <h3>🔒 กำลังโหลดข้อมูลจาก LINE...</h3>
+  <div id="profile" style="display:none;">
+    <img id="pictureUrl" width="120" style="border-radius: 50%;"/><br>
+    <p><strong>Display Name:</strong> <span id="displayName"></span></p>
+    <p><strong>User ID:</strong> <span id="userId"></span></p>
+    <p><strong>Status Message:</strong> <span id="statusMessage"></span></p>
+  </div>
+
+  <!-- ✅ โค้ดนี้คือส่วนที่ต้องเพิ่ม (แทน <script> เดิม) -->
+  <script>
+    async function runLiff() {
+      try {
+        await liff.init({ liffId: "{{LIFF_ID}}" });
+        console.log("✅ LIFF init success");
+
+        if (!liff.isLoggedIn()) {
+          console.log("🔁 Not logged in → redirecting to LINE login");
+          liff.login();
+        } else {
+          const profile = await liff.getProfile();
+          console.log("✅ Got profile:", profile);
+          document.getElementById("displayName").textContent = profile.displayName;
+          document.getElementById("userId").textContent = profile.userId;
+          document.getElementById("statusMessage").textContent = profile.statusMessage || "-";
+          document.getElementById("pictureUrl").src = profile.pictureUrl;
+          document.getElementById("profile").style.display = "block";
+        }
+      } catch (err) {
+        console.error("❌ LIFF error:", err);
+      }
     }
-  }
-  window.onload = runLiff;
-</script>
+
+    window.onload = runLiff;
+  </script>
+</body>
+</html>
