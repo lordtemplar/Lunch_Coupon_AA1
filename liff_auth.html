@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>LINE LIFF Auth</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h3>🔄 กำลังเข้าสู่ระบบผ่าน LINE...</h3>
+  <script>
+    async function main() {
+      try {
+        await liff.init({ liffId: "2007376732-8p2zWOxo" });
+        if (!liff.isLoggedIn()) {
+          liff.login();
+        } else {
+          const profile = await liff.getProfile();
+          const userId = profile.userId;
+          // เปลี่ยน URL ด้านล่างให้เป็น URL ของแอป Streamlit ของคุณ
+          const redirectUrl = `https://your-streamlit-app.streamlit.app?userId=${encodeURIComponent(userId)}`;
+          window.location.href = redirectUrl;
+        }
+      } catch (err) {
+        console.error("LIFF error:", err);
+        document.body.innerHTML = "<p>❌ เกิดข้อผิดพลาดในการโหลด LIFF</p>";
+      }
+    }
+    main();
+  </script>
+</body>
+</html>
