@@ -10,7 +10,7 @@ params = st.query_params
 user_id = params.get("userId")
 display_name = params.get("name")
 picture_url = params.get("pic")
-action = (params.get("action") or "").lower()  # ป้องกัน None และพิมพ์ใหญ่
+action = (params.get("action") or "").lower()
 
 # แสดงข้อมูลผู้ใช้
 if user_id:
