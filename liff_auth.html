@@ -35,30 +35,35 @@
   <script>
     async function main() {
       try {
-        await liff.init({ liffId: "2007376732-8p2zWOxo" }); // LIFF ID ที่คุณใช้อยู่
+        // เริ่มต้น LIFF
+        await liff.init({ liffId: "2007376732-8p2zWOxo" });
 
+        // ถ้ายังไม่ login ให้ login ก่อน
         if (!liff.isLoggedIn()) {
           liff.login();
           return;
         }
 
-        const context = liff.getContext();
+        // ดึง context และ profile (ถ้าได้)
+        const ctx = liff.getContext();
         let userId = "-";
         let displayName = "-";
         let pictureUrl = "-";
 
-        if (context.type === "user") {
+        try {
           const profile = await liff.getProfile();
           userId = profile.userId;
           displayName = profile.displayName;
           pictureUrl = profile.pictureUrl;
+        } catch (e) {
+          console.warn("⚠️ getProfile() ล้มเหลว อาจยังไม่ได้เปิด scope: profile", e);
         }
 
-        const groupId = context.groupId || "-";
-        const roomId = context.roomId || "-";
+        const groupId = ctx.groupId || "-";
+        const roomId = ctx.roomId || "-";
 
         const result = `
-📱 Type: ${context.type}
+📱 Type: ${ctx.type}
 🆔 User ID: ${userId}
 👤 Name: ${displayName}
 👥 Group ID: ${groupId}
@@ -68,7 +73,7 @@
         document.getElementById("result").innerHTML = `<pre>${result}</pre>`;
 
       } catch (err) {
-        console.error("เกิดข้อผิดพลาด:", err);
+        console.error("❌ เกิดข้อผิดพลาดใน main()", err);
         document.getElementById("result").innerText = "❌ เกิดข้อผิดพลาดในการโหลดข้อมูล";
       }
     }
